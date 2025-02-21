@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Scores</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+</head>
+<body>
+    <h1 class="page-title">Site Condition</h1>
+    <div class="container">
+        <div class='card-group'>
+            {% for site in site_info %}
+                <div class="col-md-4 mb-4 custom-card"> 
+                    <a href="{{ url_for('post', site=site['site']) }}" class="text-decoration-none" style="color: inherit;">
+                   
+                    <div class="card {% if site['score']|float < 0.5 %}low-score{% elif site['score']|float < 0.75 %}medium-score{% else %}high-score{% endif %}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ site['site'] }}</h5>
+                            <p class="card-text">Score: {{ site['score'] }}</p>
+                            <a href="{{ site['pdf'] }}" class="btn btn-primary">View PDF</a>
+                        </div>
+                    </div>
+                </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
